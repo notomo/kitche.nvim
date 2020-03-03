@@ -1,0 +1,5 @@
+start:
+	echo 'start'
+
+test:
+	echo 'test'
