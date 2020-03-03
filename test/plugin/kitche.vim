@@ -9,6 +9,7 @@ function! s:suite.open_and_serve()
     call s:assert.window_count(2)
     call s:assert.filetype('kitche-makefile')
     call s:assert.current_line('make start')
+    call s:assert.not_found('make invalid')
 
     KitcheServe
 

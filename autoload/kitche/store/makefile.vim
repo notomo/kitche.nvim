@@ -11,7 +11,7 @@ function! kitche#store#makefile#new() abort
     function! store.load() abort
         let lines = []
         for line in readfile(self.id)
-            let target = matchstr(line, '\v\zs\S*\ze:')
+            let target = matchstr(line, '\v^\zs\S*\ze:')
             if empty(target) || target ==# '.PHONY'
                 continue
             endif

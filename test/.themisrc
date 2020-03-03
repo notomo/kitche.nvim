@@ -70,7 +70,14 @@ function! s:assert() abort
 
     function! assert.buftype(expected) abort
         let actual = &buftype
-        call self.equals(actual, a:expected, 'buftype should be %s, but actual: %s', a:expected, actual)
+        let message = printf('buftype should be %s, but actual: %s', a:expected, actual)
+        call self.equals(actual, a:expected, message)
+    endfunction
+
+    function! assert.not_found(pattern) abort
+        let result = search(a:pattern, 'nw')
+        let message = printf('"%s" should not be found, but found at line: %s', a:pattern, result)
+        call self.false(result, message)
     endfunction
 
     return assert
