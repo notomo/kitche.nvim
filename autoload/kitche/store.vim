@@ -4,7 +4,6 @@ function! kitche#store#find(target) abort
     let paths = globpath(&runtimepath, pattern, v:true, v:true)
     call map(paths, { _, p -> fnamemodify(p, ':gs?\?/?:s?^.*\/autoload\/kitche\/store\/??:r')})
     for path in paths
-        let F = function(printf('kitche#store#%s#new', substitute(path, '\/', '#', 'g')))
-        return F()
+        return call(printf('kitche#store#%s#new', substitute(path, '\/', '#', 'g')), [])
     endfor
 endfunction
