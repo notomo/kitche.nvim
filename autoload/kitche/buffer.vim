@@ -9,6 +9,8 @@ function! kitche#buffer#get_or_create(store) abort
 
     let bufnr = nvim_create_buf(v:false, v:true)
     let filetype = printf('kitche-%s', a:store.name)
+    let name = printf('%s://%s', filetype, a:store.id)
+    call nvim_buf_set_name(bufnr, name)
     call nvim_buf_set_option(bufnr, 'filetype', filetype)
 
     let buffer = {

@@ -29,7 +29,6 @@ function! kitche#window#open(bufnr) abort
             \ 'focusable': v:true,
             \ 'external': v:false,
         \ })
-        call nvim_buf_set_option(self.bufnr, 'bufhidden', 'wipe')
     endfunction
 
     function! window.close() abort

@@ -80,5 +80,11 @@ function! s:assert() abort
         call self.false(result, message)
     endfunction
 
+    function! assert.file_name(expected) abort
+        let actual = fnamemodify(bufname('%'), ':t')
+        let message = printf('file name should be %s, but actual: %s', a:expected, actual)
+        call self.equals(actual, a:expected, message)
+    endfunction
+
     return assert
 endfunction

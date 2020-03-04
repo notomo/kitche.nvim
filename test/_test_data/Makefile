@@ -6,3 +6,5 @@ test:
 
 	invalid:
 		echo 'test'
+
+.PHONY: test

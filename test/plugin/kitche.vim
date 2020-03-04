@@ -8,8 +8,10 @@ function! s:suite.open_and_serve()
 
     call s:assert.window_count(2)
     call s:assert.filetype('kitche-makefile')
+    call s:assert.file_name('Makefile')
     call s:assert.current_line('make start')
     call s:assert.not_found('make invalid')
+    call s:assert.not_found('make .PHONY')
 
     KitcheServe
 
@@ -17,11 +19,18 @@ function! s:suite.open_and_serve()
     call s:assert.buftype('terminal')
 endfunction
 
-function! s:suite.open_twice()
+function! s:suite.open_many_times()
     KitcheOpen makefile
     KitcheOpen makefile
 
     call s:assert.window_count(2)
     call s:assert.filetype('kitche-makefile')
     call s:assert.current_line('make start')
+
+    call s:helper.search('make test')
+
+    quit
+    KitcheOpen makefile
+
+    call s:assert.current_line('make test')
 endfunction
