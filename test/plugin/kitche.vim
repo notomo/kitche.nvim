@@ -34,3 +34,13 @@ function! s:suite.open_many_times()
 
     call s:assert.current_line('make test')
 endfunction
+
+function! s:suite.reload()
+    KitcheOpen makefile
+
+    call s:assert.current_line('make start')
+
+    edit!
+
+    call s:assert.current_line('make start')
+endfunction

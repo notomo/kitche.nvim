@@ -25,6 +25,7 @@ function! kitche#buffer#get_or_create(store) abort
 
     let s:buffers[a:store.id] = buffer
     execute printf('autocmd BufWipeout <buffer=%s> call s:on_wipe("%s")', bufnr, a:store.id)
+    execute printf('autocmd BufReadCmd <buffer=%s> call s:reload("%s")', bufnr, a:store.id)
 
     return buffer
 endfunction
@@ -44,4 +45,12 @@ function! s:on_wipe(id) abort
         return
     endif
     call remove(s:buffers, a:id)
+endfunction
+
+function! s:reload(id) abort
+    if !has_key(s:buffers, a:id)
+        return
+    endif
+    let buffer = s:buffers[a:id]
+    call buffer.render()
 endfunction
