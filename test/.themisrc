@@ -86,5 +86,11 @@ function! s:assert() abort
         call self.equals(actual, a:expected, message)
     endfunction
 
+    function! assert.tab_count(expected) abort
+        let actual = tabpagenr('$')
+        let message = printf('tab count should be %s, but actual: %s', a:expected, actual)
+        call self.equals(actual, a:expected, message)
+    endfunction
+
     return assert
 endfunction

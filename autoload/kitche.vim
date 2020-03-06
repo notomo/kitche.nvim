@@ -27,3 +27,18 @@ function! kitche#serve() abort
 
     return store.serve(line)
 endfunction
+
+function! kitche#look() abort
+    let bufnr = bufnr('%')
+    let buffer = kitche#buffer#find(bufnr)
+    if empty(buffer)
+        return kitche#messenger#new().warn('not kitche buffer')
+    endif
+
+    let line = getline('.')
+
+    let store = buffer.store
+    call kitche#window#close()
+
+    return store.look(line)
+endfunction

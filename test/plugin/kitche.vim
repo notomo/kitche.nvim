@@ -44,3 +44,17 @@ function! s:suite.reload()
 
     call s:assert.current_line('make start')
 endfunction
+
+function! s:suite.look()
+    KitcheOpen makefile
+    KitcheLook
+
+    call s:assert.window_count(1)
+    call s:assert.tab_count(1)
+    call s:assert.file_name('Makefile')
+
+    KitcheOpen makefile
+    KitcheLook
+
+    call s:assert.tab_count(1)
+endfunction

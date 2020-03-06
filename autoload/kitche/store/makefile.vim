@@ -25,5 +25,9 @@ function! kitche#store#makefile#new() abort
         call termopen(a:line, {'cwd': fnamemodify(self.id, ':h')})
     endfunction
 
+    function! store.look(line) abort
+        execute 'tab drop' self.id
+    endfunction
+
     return store
 endfunction
