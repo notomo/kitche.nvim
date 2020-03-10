@@ -2,7 +2,7 @@
 function! kitche#store#makefile#new() abort
     let store = {'name': 'makefile'}
 
-    let makefile_path = kitche#util#search_parent_recursive('Makefile', './')
+    let makefile_path = s:search_makefile()
     if empty(makefile_path)
         return v:null
     endif
@@ -10,12 +10,14 @@ function! kitche#store#makefile#new() abort
 
     function! store.load() abort
         let lines = []
+        let file_name = fnamemodify(self.id, ':t')
         for line in readfile(self.id)
             let target = matchstr(line, '\v^\zs\S*\ze:')
             if empty(target) || target ==# '.PHONY'
                 continue
             endif
-            call add(lines, 'make ' . target)
+            let cmd = printf('make -f %s %s', file_name, target)
+            call add(lines, cmd)
         endfor
         return lines
     endfunction
@@ -30,4 +32,11 @@ function! kitche#store#makefile#new() abort
     endfunction
 
     return store
+endfunction
+
+function! s:search_makefile() abort
+    if &filetype ==? 'make'
+        return expand('%:p')
+    endif
+    return kitche#util#search_parent_recursive('Makefile', './')
 endfunction
