@@ -29,6 +29,8 @@ function! kitche#window#open(bufnr) abort
             \ 'focusable': v:true,
             \ 'external': v:false,
         \ })
+        call nvim_win_set_option(self.id, 'cursorline', v:true)
+        call nvim_win_set_option(self.id, 'winhighlight', 'CursorLine:KitcheCursorLine')
     endfunction
 
     function! window.close() abort
