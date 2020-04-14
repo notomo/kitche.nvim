@@ -10,6 +10,7 @@ function! s:suite.open_and_serve()
     call s:assert.filetype('kitche-makefile')
     call s:assert.file_name('Makefile')
     call s:assert.current_line('make -f Makefile start')
+    call s:assert.found('make -f test.mk build')
     call s:assert.not_found('make -f Makefile invalid')
     call s:assert.not_found('make -f Makefile .PHONY')
 
@@ -25,6 +26,8 @@ function! s:suite.file_option()
     KitcheOpen makefile
 
     call s:assert.current_line('make -f test.mk build')
+    call s:assert.not_found('make -f Makefile start')
+    call s:assert.line_count(1)
 endfunction
 
 function! s:suite.open_many_times()

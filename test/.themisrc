@@ -44,6 +44,13 @@ function! KitcheTestHelper() abort
         return result
     endfunction
 
+    function! helper.buffer_log() abort
+        let lines = getbufline('%', 1, '$')
+        for line in lines
+            call themis#log('[buffer] ' . line)
+        endfor
+    endfunction
+
     return helper
 endfunction
 
@@ -80,6 +87,12 @@ function! s:assert() abort
         call self.false(result, message)
     endfunction
 
+    function! assert.found(pattern) abort
+        let result = search(a:pattern, 'nw')
+        let message = printf('"%s" should be found, but not found', a:pattern)
+        call self.truthy(result, message)
+    endfunction
+
     function! assert.file_name(expected) abort
         let actual = fnamemodify(bufname('%'), ':t')
         let message = printf('file name should be %s, but actual: %s', a:expected, actual)
@@ -89,6 +102,12 @@ function! s:assert() abort
     function! assert.tab_count(expected) abort
         let actual = tabpagenr('$')
         let message = printf('tab count should be %s, but actual: %s', a:expected, actual)
+        call self.equals(actual, a:expected, message)
+    endfunction
+
+    function! assert.line_count(expected) abort
+        let actual = line('$')
+        let message = printf('line count should be %s, but actual: %s', a:expected, actual)
         call self.equals(actual, a:expected, message)
     endfunction
 

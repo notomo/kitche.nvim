@@ -10,8 +10,24 @@ function! kitche#store#makefile#new() abort
 
     function! store.load() abort
         let lines = []
-        let file_name = fnamemodify(self.id, ':t')
-        for line in readfile(self.id)
+
+        let dir_path = fnamemodify(self.id, ':h')
+        let paths = glob(dir_path . '/*.mk', v:false, v:true)
+        let match = match(paths, '^' . self.id . '$')
+        if match != -1
+            call remove(paths, match)
+        endif
+
+        for path in [self.id] + paths
+            call extend(lines, self._load(path))
+        endfor
+        return lines
+    endfunction
+
+    function! store._load(path) abort
+        let lines = []
+        let file_name = fnamemodify(a:path, ':t')
+        for line in readfile(a:path)
             let target = matchstr(line, '\v^\zs\S*\ze:')
             if empty(target) || target ==# '.PHONY'
                 continue
