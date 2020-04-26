@@ -35,6 +35,7 @@ function! kitche#store#makefile#new() abort
             let cmd = printf('make -f %s %s', file_name, target)
             call add(lines, cmd)
         endfor
+        call uniq(lines)
         return lines
     endfunction
 
