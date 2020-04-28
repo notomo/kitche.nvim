@@ -58,14 +58,18 @@ endfunction
 
 function! s:suite.look()
     KitcheOpen makefile
+    call s:helper.search('make -f Makefile test')
+
     KitcheLook
 
     call s:assert.window_count(1)
     call s:assert.tab_count(1)
     call s:assert.file_name('Makefile')
+    call s:assert.current_line('test:')
 
     KitcheOpen makefile
     KitcheLook
 
     call s:assert.tab_count(1)
+    call s:assert.current_line('test:')
 endfunction

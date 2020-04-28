@@ -46,6 +46,12 @@ function! kitche#store#makefile#new() abort
 
     function! store.look(line) abort
         execute 'tab drop' self.id
+        let target = matchstr(a:line, '\vmake\s+-f\s+\S+\s+\zs\S+\ze\s*')
+        if empty(target)
+            return
+        endif
+        let pattern = printf('%s:', target)
+        call search(pattern, 'w')
     endfunction
 
     return store
