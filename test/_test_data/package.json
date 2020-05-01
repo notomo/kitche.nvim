@@ -1,0 +1,7 @@
+{
+  "name": "example",
+  "scripts": {
+    "start": "echo start",
+    "build": "echo build"
+  }
+}

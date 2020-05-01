@@ -1,8 +1,14 @@
 
-function! kitche#open(target) abort
-    let store = kitche#store#find(a:target)
+function! kitche#open(...) abort
+    let store = v:null
+    for target in a:000
+        let store = kitche#store#find(target)
+        if !empty(store)
+            break
+        endif
+    endfor
     if empty(store)
-        return kitche#messenger#new().warn('not found store for target: ' . a:target)
+        return kitche#messenger#new().warn('not found store for target: ' . string(a:000))
     endif
 
     call kitche#window#close()

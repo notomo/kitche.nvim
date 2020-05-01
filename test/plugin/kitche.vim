@@ -73,3 +73,40 @@ function! s:suite.look()
     call s:assert.tab_count(1)
     call s:assert.current_line('test:')
 endfunction
+
+function! s:suite.open_package_json()
+    KitcheOpen packagejson
+
+    call s:assert.filetype('kitche-packagejson')
+    call s:assert.file_name('package.json')
+    call s:assert.found('npm run start')
+    call s:assert.found('npm run build')
+
+    KitcheServe
+
+    call s:assert.window_count(1)
+    call s:assert.buftype('terminal')
+endfunction
+
+function! s:suite.look_package_json()
+    KitcheOpen packagejson
+    call s:helper.search('npm run start')
+
+    KitcheLook
+
+    call s:assert.window_count(1)
+    call s:assert.tab_count(1)
+    call s:assert.file_name('package.json')
+    call s:assert.current_line('    "start": "echo start",')
+
+    KitcheOpen packagejson
+    KitcheLook
+
+    call s:assert.tab_count(1)
+    call s:assert.current_line('    "start": "echo start",')
+endfunction
+
+function! s:suite.more_targets()
+    KitcheOpen notfound packagejson
+    call s:assert.file_name('package.json')
+endfunction
