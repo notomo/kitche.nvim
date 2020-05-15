@@ -13,6 +13,7 @@ function! s:suite.open_and_serve()
     call s:assert.found('make -f test.mk build')
     call s:assert.not_found('make -f Makefile invalid')
     call s:assert.not_found('make -f Makefile .PHONY')
+    call s:assert.not_found('make -f Makefile TEST')
 
     KitcheServe
 

@@ -28,7 +28,7 @@ function! kitche#store#makefile#new() abort
         let lines = []
         let file_name = fnamemodify(a:path, ':t')
         for line in readfile(a:path)
-            let target = matchstr(line, '\v^\zs\S*\ze:')
+            let target = matchstr(line, '\v^\zs\S*\ze:[^=]*$')
             if empty(target) || target ==# '.PHONY'
                 continue
             endif
