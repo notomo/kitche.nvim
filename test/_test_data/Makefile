@@ -1,7 +1,7 @@
 start:
 	echo 'start'
 
-TEST:=1
+TEST:=test:test
 
 test:
 	echo 'test'

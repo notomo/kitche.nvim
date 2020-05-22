@@ -29,7 +29,7 @@ function! kitche#store#makefile#new() abort
         let file_name = fnamemodify(a:path, ':t')
         for line in readfile(a:path)
             let target = matchstr(line, '\v^\zs\S*\ze:[^=]*$')
-            if empty(target) || target ==# '.PHONY'
+            if empty(target) || target ==# '.PHONY' || stridx(target, ':') != -1
                 continue
             endif
             let cmd = printf('make -f %s %s', file_name, target)
@@ -50,7 +50,7 @@ function! kitche#store#makefile#new() abort
         if empty(target)
             return
         endif
-        let pattern = printf('%s:', target)
+        let pattern = printf('^%s:', target)
         call search(pattern, 'w')
     endfunction
 
