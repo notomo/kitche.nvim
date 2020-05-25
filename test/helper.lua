@@ -19,6 +19,7 @@ M.after_each = function()
   M.command("silent! %bwipeout!")
   M.command("filetype off")
   M.command("syntax off")
+  print(" ")
 end
 
 M.search = function(pattern)

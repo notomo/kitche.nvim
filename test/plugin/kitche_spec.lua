@@ -95,7 +95,7 @@ describe("plugin.kitche", function()
 
   it("look_package_json", function()
     command("KitcheOpen packagejson")
-    helper.search('npm run star')
+    helper.search('npm run start')
 
     command("KitcheLook")
 
