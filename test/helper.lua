@@ -53,7 +53,7 @@ AM.file_name = function(expected)
 end
 
 AM.current_line = function(expected)
-  local actual = vim.fn.getline(vim.fn.line("."))
+  local actual = vim.fn.getline(".")
   local msg = string.format("current line should be %s, but actual: %s", expected, actual)
   assert.equals(expected, actual, msg)
 end

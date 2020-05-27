@@ -25,7 +25,7 @@ local Store = function(id)
       vim.fn.termopen(line, {cwd = vim.fn.fnamemodify(id, ":h")})
     end,
     look = function(line)
-      vim.fn.execute("tab drop" .. id)
+      vim.api.nvim_command("tab drop" .. id)
       local target = vim.fn.matchstr(line, "\\vnpm\\s+run\\s+\\zs\\S+\\ze\\s*")
       if target == "" then
         return

@@ -27,13 +27,13 @@ M.open = function(...)
 end
 
 M.serve = function()
-  local bufnr = vim.fn.bufnr("%")
+  local bufnr = vim.api.nvim_get_current_buf()
   local buffer = buffers.find(bufnr)
   if buffer == nil then
     return messenger.warn("not kitche buffer")
   end
 
-  local line = vim.fn.getline(".")
+  local line = vim.api.nvim_get_current_line()
   local store = buffer.store
 
   window.close()
@@ -42,13 +42,13 @@ M.serve = function()
 end
 
 M.look = function()
-  local bufnr = vim.fn.bufnr("%")
+  local bufnr = vim.api.nvim_get_current_buf()
   local buffer = buffers.find(bufnr)
   if buffer == nil then
     return messenger.warn("not kitche buffer")
   end
 
-  local line = vim.fn.getline(".")
+  local line = vim.api.nvim_get_current_line()
   local store = buffer.store
 
   window.close()
