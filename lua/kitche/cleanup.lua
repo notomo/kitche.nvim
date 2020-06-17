@@ -1,7 +1,8 @@
-return function()
-  for name in pairs(package.loaded) do
-    if vim.startswith(name, "kitche/") then
-      package.loaded[name] = nil
+return function(name)
+  local dir = name .. "/"
+  for key in pairs(package.loaded) do
+    if vim.startswith(key, dir) or key == name then
+      package.loaded[key] = nil
     end
   end
 end
