@@ -7,7 +7,7 @@ stores.find = function(target)
   for _, path in ipairs(vim.split(package.path, ";")) do
     local p = path:gsub("?", name)
     if vim.fn.filereadable(p) == 1 then
-      local store_func = dofile(p)
+      local store_func = require(name)
       return store_func()
     end
   end
