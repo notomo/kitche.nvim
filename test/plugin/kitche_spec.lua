@@ -8,7 +8,7 @@ describe("plugin.kitche", function()
   after_each(helper.after_each)
 
   it("open_and_serve", function()
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
 
     assert.window_count(2)
     assert.filetype('kitche-makefile')
@@ -19,7 +19,7 @@ describe("plugin.kitche", function()
     assert.not_found('make -f Makefile .PHONY')
     assert.not_found('make -f Makefile TEST')
 
-    command("KitcheServe")
+    command("Kitche serve")
 
     assert.window_count(1)
     assert.buftype('terminal')
@@ -28,7 +28,7 @@ describe("plugin.kitche", function()
   it("file_option", function()
     command("edit ./test.mk")
 
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
 
     assert.current_line('make -f test.mk build')
     assert.not_found('make -f Makefile start')
@@ -36,8 +36,8 @@ describe("plugin.kitche", function()
   end)
 
   it("open_many_times", function()
-    command("KitcheOpen makefile")
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
+    command("Kitche open makefile")
 
     assert.window_count(2)
     assert.filetype('kitche-makefile')
@@ -46,13 +46,13 @@ describe("plugin.kitche", function()
     helper.search('make -f Makefile test')
 
     command("quit")
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
 
     assert.current_line('make -f Makefile test')
   end)
 
   it("reload", function()
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
 
     assert.current_line('make -f Makefile start')
 
@@ -62,57 +62,57 @@ describe("plugin.kitche", function()
   end)
 
   it("look", function()
-    command("KitcheOpen makefile")
+    command("Kitche open makefile")
     helper.search('make -f Makefile test')
 
-    command("KitcheLook")
+    command("Kitche look")
 
     assert.window_count(1)
     assert.tab_count(1)
     assert.file_name('Makefile')
     assert.current_line('test:')
 
-    command("KitcheOpen makefile")
-    command("KitcheLook")
+    command("Kitche open makefile")
+    command("Kitche look")
 
     assert.tab_count(1)
     assert.current_line('test:')
   end)
 
   it("open_package_json", function()
-    command("KitcheOpen packagejson")
+    command("Kitche open packagejson")
 
     assert.filetype('kitche-packagejson')
     assert.file_name('package.json')
     assert.found('npm run start')
     assert.found('npm run build')
 
-    command("KitcheServe")
+    command("Kitche serve")
 
     assert.window_count(1)
     assert.buftype('terminal')
   end)
 
   it("look_package_json", function()
-    command("KitcheOpen packagejson")
+    command("Kitche open packagejson")
     helper.search('npm run start')
 
-    command("KitcheLook")
+    command("Kitche look")
 
     assert.window_count(1)
     assert.tab_count(1)
     assert.file_name('package.json')
     assert.current_line('    "start": "echo start",')
 
-    command("KitcheOpen packagejson")
-    command("KitcheLook")
+    command("Kitche open packagejson")
+    command("Kitche look")
 
     assert.tab_count(1)
     assert.current_line('    "start": "echo start",')
   end)
 
   it("more_targets", function()
-    command("KitcheOpen notfound packagejson")
+    command("Kitche open notfound packagejson")
     assert.file_name('package.json')
   end)
 end)

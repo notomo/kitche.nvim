@@ -3,8 +3,10 @@ if exists('g:loaded_kitche')
 endif
 let g:loaded_kitche = 1
 
-command! -nargs=+ KitcheOpen lua require 'kitche/command'.open(<f-args>)
-command! KitcheServe lua require 'kitche/command'.serve()
-command! KitcheLook lua require 'kitche/command'.look()
+if get(g:, 'kitche_debug', v:false)
+    command! -nargs=+ Kitche lua require("kitche/cleanup")(); require "kitche/command".main(<f-args>)
+else
+    command! -nargs=+ Kitche lua require 'kitche/command'.main(<f-args>)
+endif
 
 highlight default link KitcheCursorLine Search
