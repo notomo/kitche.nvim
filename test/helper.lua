@@ -20,6 +20,9 @@ M.after_each = function()
   M.command("filetype off")
   M.command("syntax off")
   print(" ")
+
+  -- NOTE: for require("test.helper")
+  vim.api.nvim_set_current_dir(M.root)
 end
 
 M.search = function(pattern)

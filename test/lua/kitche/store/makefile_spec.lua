@@ -2,12 +2,12 @@ local helper = require "test.helper"
 local assert = helper.assert
 local command = helper.command
 
-describe("plugin.kitche", function()
+describe("kitche for makefile", function()
 
   before_each(helper.before_each)
   after_each(helper.after_each)
 
-  it("open_and_serve", function()
+  it("can open and serve", function()
     command("Kitche open makefile")
 
     assert.window_count(2)
@@ -25,7 +25,7 @@ describe("plugin.kitche", function()
     assert.buftype('terminal')
   end)
 
-  it("file_option", function()
+  it("can open for current makefile", function()
     command("edit ./test.mk")
 
     command("Kitche open makefile")
@@ -35,7 +35,7 @@ describe("plugin.kitche", function()
     assert.line_count(1)
   end)
 
-  it("open_many_times", function()
+  it("can be opend once", function()
     command("Kitche open makefile")
     command("Kitche open makefile")
 
@@ -51,7 +51,7 @@ describe("plugin.kitche", function()
     assert.current_line('make -f Makefile test')
   end)
 
-  it("reload", function()
+  it("can reload", function()
     command("Kitche open makefile")
 
     assert.current_line('make -f Makefile start')
@@ -61,7 +61,7 @@ describe("plugin.kitche", function()
     assert.current_line('make -f Makefile start')
   end)
 
-  it("look", function()
+  it("can open and look", function()
     command("Kitche open makefile")
     helper.search('make -f Makefile test')
 
@@ -77,42 +77,5 @@ describe("plugin.kitche", function()
 
     assert.tab_count(1)
     assert.current_line('test:')
-  end)
-
-  it("open_package_json", function()
-    command("Kitche open packagejson")
-
-    assert.filetype('kitche-packagejson')
-    assert.file_name('package.json')
-    assert.found('npm run start')
-    assert.found('npm run build')
-
-    command("Kitche serve")
-
-    assert.window_count(1)
-    assert.buftype('terminal')
-  end)
-
-  it("look_package_json", function()
-    command("Kitche open packagejson")
-    helper.search('npm run start')
-
-    command("Kitche look")
-
-    assert.window_count(1)
-    assert.tab_count(1)
-    assert.file_name('package.json')
-    assert.current_line('    "start": "echo start",')
-
-    command("Kitche open packagejson")
-    command("Kitche look")
-
-    assert.tab_count(1)
-    assert.current_line('    "start": "echo start",')
-  end)
-
-  it("more_targets", function()
-    command("Kitche open notfound packagejson")
-    assert.file_name('package.json')
   end)
 end)
