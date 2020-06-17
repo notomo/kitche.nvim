@@ -3,15 +3,12 @@ local M = {}
 local stores = {}
 
 stores.find = function(target)
-  local name = string.format("kitche/store/%s", target)
-  for _, path in ipairs(vim.split(package.path, ";")) do
-    local p = path:gsub("?", name)
-    if vim.fn.filereadable(p) == 1 then
-      local store_func = require(name)
-      return store_func()
-    end
+  local name = ("kitche/store/%s"):format(target)
+  local ok, func = pcall(require, name)
+  if not ok then
+    return nil
   end
-  return nil
+  return func()
 end
 
 M.stores = stores
