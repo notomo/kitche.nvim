@@ -34,6 +34,10 @@ M.search = function(pattern)
   return result
 end
 
+M.set_lines = function(lines)
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(lines, "\n"))
+end
+
 local assert = require("luassert")
 local AM = {}
 
@@ -88,6 +92,12 @@ end
 AM.line_count = function(expected)
   local actual = vim.fn.line("$")
   local msg = string.format("line count should be %s, but actual: %s", expected, actual)
+  assert.equals(expected, actual, msg)
+end
+
+AM.lines = function(expected)
+  local actual = table.concat(vim.fn.getbufline("%", 0, "$"), "\n")
+  local msg = string.format("lines should be %s, but actual: %s", expected, actual)
   assert.equals(expected, actual, msg)
 end
 

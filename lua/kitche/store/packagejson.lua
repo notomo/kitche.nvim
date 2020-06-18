@@ -1,5 +1,7 @@
 local util = require "kitche/util"
 
+local M = {}
+
 local Store = function(id)
   return {
     id = id,
@@ -36,10 +38,12 @@ local Store = function(id)
   }
 end
 
-return function()
+M.find = function()
   local path = util.search_parent_recursive("package.json", "./")
   if path == "" then
     return nil
   end
   return Store(path)
 end
+
+return M

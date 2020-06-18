@@ -1,5 +1,7 @@
 local util = require "kitche/util"
 
+local M = {}
+
 local Store = function(id)
   local _load = function(path)
     local lines = {}
@@ -57,10 +59,12 @@ local search_makefile = function()
   return util.search_parent_recursive("Makefile", "./")
 end
 
-return function()
+M.find = function()
   local makefile_path = search_makefile()
   if makefile_path == "" then
     return nil
   end
   return Store(makefile_path)
 end
+
+return M

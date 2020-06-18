@@ -4,11 +4,11 @@ local stores = {}
 
 stores.find = function(target)
   local name = ("kitche/store/%s"):format(target)
-  local ok, func = pcall(require, name)
+  local ok, module = pcall(require, name)
   if not ok then
     return nil
   end
-  return func()
+  return module.find()
 end
 
 M.stores = stores
