@@ -6,8 +6,8 @@ local Buffer = function(store, bufnr)
   return {
     store = store,
     bufnr = bufnr,
-    render = function()
-      local lines = store.load()
+    render = function(range)
+      local lines = store.load(range)
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)
     end
   }

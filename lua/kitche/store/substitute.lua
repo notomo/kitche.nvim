@@ -22,14 +22,19 @@ local Store = function(id)
   return {
     id = id,
     name = "substitute",
-    load = function()
+    load = function(range)
+      local cmd_range = M.range
+      if range.given then
+        cmd_range = ("%d,%d"):format(range.first, range.last)
+      end
+
       local lines = {}
       for key, command in pairs(M.commands) do
         local flags = command.flags
         if flags == nil then
           flags = M.flags
         end
-        local value = ("%ss/\\v%s/%s/%s"):format(M.range, command.pattern, command.after, flags)
+        local value = ("%ss/\\v%s/%s/%s"):format(cmd_range, command.pattern, command.after, flags)
         local line = ("%s\t%s"):format(key, value)
         table.insert(lines, line)
       end

@@ -6,7 +6,7 @@ local messenger = require "kitche/messenger"
 local M = {}
 
 local cmds = {
-  open = function(...)
+  open = function(range, ...)
     local store = nil
     for _, target in ipairs({...}) do
       store = stores.find(target)
@@ -22,11 +22,11 @@ local cmds = {
     window.close()
 
     local buffer = buffers.get_or_create(store)
-    buffer:render()
+    buffer.render(range)
 
     window.open(buffer.bufnr)
   end,
-  serve = function()
+  serve = function(_)
     local bufnr = vim.api.nvim_get_current_buf()
     local buffer = buffers.find(bufnr)
     if buffer == nil then
@@ -40,7 +40,7 @@ local cmds = {
 
     return store.serve(line)
   end,
-  look = function()
+  look = function(_)
     local bufnr = vim.api.nvim_get_current_buf()
     local buffer = buffers.find(bufnr)
     if buffer == nil then
@@ -64,7 +64,7 @@ local slice = function(tbl, first, last)
   return result
 end
 
-M.main = function(...)
+M.main = function(has_range, raw_range, ...)
   local args = {...}
 
   local name = args[1]
@@ -73,8 +73,14 @@ M.main = function(...)
     return messenger.warn("not found command: args=" .. vim.inspect(args))
   end
 
+  local range = {
+    first = raw_range[1],
+    last = raw_range[2],
+    given = has_range ~= 0
+  }
+
   local cmd_args = slice(args, 2)
-  cmd(unpack(cmd_args))
+  cmd(range, unpack(cmd_args))
 end
 
 return M

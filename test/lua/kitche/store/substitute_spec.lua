@@ -23,4 +23,21 @@ foo]])
 foo]])
   end)
 
+  it("can open and serve with range", function()
+    helper.set_lines([[
+hoge
+foo
+bar]])
+
+    command("1,2Kitche open substitute")
+    helper.search("surround_by_double_quote")
+
+    command("Kitche serve")
+
+    assert.lines([[
+"hoge"
+"foo"
+bar]])
+  end)
+
 end)
