@@ -17,6 +17,9 @@ M.commands = {
 
 M.flags = "ge"
 M.range = "%"
+M.after_serve = function(_, _)
+  vim.api.nvim_command("nohlsearch")
+end
 
 local Store = function(id)
   return {
@@ -47,6 +50,9 @@ local Store = function(id)
       end
       local cmd = line:sub(idx + 1)
       vim.api.nvim_command(cmd)
+
+      local key = line:sub(0, idx - 1)
+      M.after_serve(key, cmd)
     end,
     look = function(_)
     end

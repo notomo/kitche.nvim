@@ -23,7 +23,7 @@ foo]])
 foo]])
   end)
 
-  it("can open and serve with range", function()
+  describe("can open and serve with range", function()
     helper.set_lines([[
 hoge
 foo
@@ -38,6 +38,11 @@ bar]])
 "hoge"
 "foo"
 bar]])
+
+    it("disable hlsearch after serve", function()
+      assert.is_true(vim.v.hlsearch == 0)
+    end)
+
   end)
 
   it("can reload", function()
@@ -55,5 +60,6 @@ bar]])
 
     command("Kitche serve")
   end)
+
 
 end)
