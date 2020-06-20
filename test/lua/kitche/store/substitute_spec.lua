@@ -40,4 +40,13 @@ bar]])
 bar]])
   end)
 
+  it("can reload", function()
+    command("Kitche open substitute")
+    helper.search("remove_new_line")
+
+    command("edit!")
+
+    helper.search("remove_new_line")
+  end)
+
 end)

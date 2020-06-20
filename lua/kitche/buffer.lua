@@ -34,18 +34,19 @@ buffers.find = function(bufnr)
 end
 
 buffers.get_or_create = function(store)
-  local filetype = string.format("kitche-%s", store.name)
-  local name = string.format("%s://%s", filetype, store.id)
+  local filetype = ("kitche-%s"):format(store.name)
+  local name = ("%s://%s"):format(filetype, store.id)
 
-  local pattern = string.format("^%s$", name)
+  local pattern = ("^%s$"):format(name)
   local bufnr = vim.fn.bufnr(pattern)
   if bufnr == -1 then
     bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(bufnr, name)
     vim.api.nvim_buf_set_option(bufnr, "filetype", filetype)
 
-    cmd = string.format("autocmd BufReadCmd <buffer=%s> lua require 'kitche/buffer'.buffers.reload(%s)", bufnr, bufnr)
-    vim.api.nvim_command(cmd)
+    local on_read =
+      ("autocmd BufReadCmd <buffer=%s> lua require 'kitche/buffer'.buffers.reload(%s)"):format(bufnr, bufnr)
+    vim.api.nvim_command(on_read)
   end
 
   return Buffer(store, bufnr)
@@ -56,7 +57,7 @@ buffers.reload = function(bufnr)
   if buffer == nil then
     return
   end
-  buffer.render()
+  buffer.render({given = false})
 end
 
 M.buffers = buffers
