@@ -15,7 +15,7 @@ M.commands = {
   }
 }
 
-M.flags = "g"
+M.flags = "ge"
 M.range = "%"
 
 local Store = function(id)

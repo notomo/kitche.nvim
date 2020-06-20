@@ -49,4 +49,11 @@ bar]])
     helper.search("remove_new_line")
   end)
 
+  it("ignore pattern not found error on serve", function()
+    command("Kitche open substitute")
+    helper.search("surround_by_double_quote")
+
+    command("Kitche serve")
+  end)
+
 end)
