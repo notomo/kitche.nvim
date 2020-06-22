@@ -56,14 +56,6 @@ local cmds = {
   end
 }
 
-local slice = function(tbl, first, last)
-  local result = {}
-  for i = first or 1, last or #tbl, 1 do
-    result[#result + 1] = tbl[i]
-  end
-  return result
-end
-
 M.main = function(has_range, raw_range, ...)
   local args = {...}
 
@@ -79,7 +71,7 @@ M.main = function(has_range, raw_range, ...)
     given = has_range ~= 0
   }
 
-  local cmd_args = slice(args, 2)
+  local cmd_args = {unpack(args, 2)}
   cmd(range, unpack(cmd_args))
 end
 
