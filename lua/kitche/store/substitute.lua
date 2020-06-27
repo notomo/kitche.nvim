@@ -5,6 +5,14 @@ M.commands = {
     pattern = "^$\\n",
     after = ""
   },
+  clean_tab_sequence = {
+    pattern = "\\\\t",
+    after = "    "
+  },
+  clean_new_line_sequence = {
+    pattern = "\\\\n",
+    after = "\\r"
+  },
   surround_by_single_quote = {
     pattern = "^(.+)$",
     after = "'\\1'"
