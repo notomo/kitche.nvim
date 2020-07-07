@@ -61,5 +61,15 @@ bar]])
     command("Kitche serve")
   end)
 
+  it("can escape", function()
+    helper.set_lines([[ho/ge]])
+
+    command("Kitche open substitute")
+    helper.search("escape")
+
+    command("Kitche serve")
+
+    assert.lines([[ho\/ge]])
+  end)
 
 end)

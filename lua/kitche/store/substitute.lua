@@ -13,6 +13,10 @@ M.commands = {
     pattern = "\\\\n",
     after = "\\r"
   },
+  escape = {
+    pattern = "^(.+)$",
+    after = '\\=escape(submatch(0), "\\/")'
+  },
   surround_by_single_quote = {
     pattern = "^(.+)$",
     after = "'\\1'"
